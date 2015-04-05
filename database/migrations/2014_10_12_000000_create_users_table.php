@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration {
 			$table->boolean('is_tutor')->default(0);
 			$table->boolean('tutor_complete')->default(0);
 			$table->boolean('student_complete')->default(0);
-			$table->string('photo');
+			$table->string('photo')->default('/image/person-placeholder.jpg');
 			$table->rememberToken();
 			$table->timestamps();
 		});

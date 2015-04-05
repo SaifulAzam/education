@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en" ng-app="edu"> <!--<![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/headers/header1.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <link rel="stylesheet" href="/assets/css/blocks.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="shortcut icon" href="favicon.ico">
     <!-- CSS Implementing Plugins -->
     <link rel="stylesheet" href="/plugins/fontawesome/css/font-awesome.css">
@@ -37,7 +38,7 @@
     <link rel="stylesheet" href="/css/custom.css"/>
 
 </head>
-<body>
+<body ng-app="edu">
     @include('front.partials.nav')
     @yield('content')
     @include('front.partials.footer')
@@ -47,10 +48,11 @@
     <script src="/js/angular-route.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/app.js"></script>
-    <script src="/js/controllers/MainController.js"></script> <!-- load our controller -->
-    <script src="/js/services/CommentService.js"></script> <!-- load our service -->
+    <script src="/js/controllers/CommentsController.js"></script> <!-- load our controller -->
+    <script src="/js/controllers/TagsController.js"></script> <!-- load our controller -->
+    <script src="/js/services/CommentsService.js"></script> <!-- load our service -->
+    <script src="/js/services/TagsService.js"></script> <!-- load our service -->
     <!-- JS Global Compulsory -->
-
     <script type="text/javascript" src="/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="/assets/plugins/hover-dropdown.min.js"></script>
     <script type="text/javascript" src="/assets/plugins/back-to-top.js"></script>

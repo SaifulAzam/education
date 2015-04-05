@@ -1,6 +1,8 @@
-var edu = angular.module('edu', ['MainController', 'CommentService', 'ngRoute'], function($interpolateProvider){
-    $interpolateProvider.startSymbol('<<');
-    $interpolateProvider.endSymbol('>>');
+var edu = angular
+    .module('edu', ['CommentsController', 'CommentsService', 'TagsController', 'TagsService'],
+        function($interpolateProvider){
+    $interpolateProvider.startSymbol('<%');
+    $interpolateProvider.endSymbol('%>');
 });
 
 /*

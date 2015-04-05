@@ -20,17 +20,16 @@
 @endsection
 @section('content')
 
-    @include('front.tutors.lesson.create')
+    @include('front.tutors.partials.add_lesson')
     <!--=== Profile ===-->
     <div class="container content profile">
         <div class="row">
             <!--Left Sidebar-->
             <div class="col-md-3 md-margin-bottom-40">
-                <img class="img-responsive profile-img margin-bottom-20" src="/assets/img/team/img1-md.jpg" alt="">
+                <img class="img-responsive profile-img margin-bottom-20" src="{{$tutor->user->photo}}" alt="">
 
                 @include('front.partials.left_sidebar.tutor_sidenav', ['id' => $tutor->id])
 
-                @include('front.partials.left_sidebar.task')
 
                 <!--Datepicker-->
                 <form action="#" id="sky-form2" class="sky-form">
@@ -44,7 +43,11 @@
             <!-- Profile Content -->
             <div class="col-md-9">
                 <div class="profile-body">
-                    <i class="fa fa-plus btn" data-toggle="modal" data-target="#add_lesson"></i>
+                    @if(Auth::user())
+                        @if(Auth::user()->isTutor($tutor->user->id))
+                        <i class="fa fa-plus btn" data-toggle="modal" data-target="#add_lesson"></i>
+                        @endif
+                    @endif
                     <!--Projects-->
                         @if($tutor->lessons->count() == 0)
                             <h3>这家伙还没有任何课程</h3>
@@ -59,14 +62,18 @@
                                                 @foreach($lesson->tags as $tag)
                                                     {{$tag->name}}
                                                 @endforeach
+                                                    @if(Auth::user())
+                                                        @if(Auth::user()->isTutor($tutor->user->id))
                                                     <form id="deleteForm" method="post" action="{{URL::to('tutors/' . $tutor->id . '/deleteLesson/' . $lesson->id)}}">
                                                         <button type="submit" class="fa fa-trash pull-right"></button>
                                                     </form>
                                                     <button class="fa fa-pencil pull-right" data-toggle="modal" data-target="#edit_lesson"></button>
+                                                        @endif
+                                                    @endif
                                             </div>
                                         </div>
                                         <div class="projects">
-                                            <h2><a class="color-dark" href="#">{{$lesson->title}}</a></h2>
+                                            <h2><a class="color-dark" href="{{action('Frontend\LessonsController@show', [$lesson->id])}}">{{$lesson->title}}</a></h2>
                                             <ul class="list-unstyled list-inline blog-info-v2">
                                                 <li>By: <a class="color-green" href="#">{{$tutor->user->nickname}}</a></li>
                                                 <li><i class="fa fa-clock-o"></i> {{$lesson->published_at}}</li>

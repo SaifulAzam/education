@@ -140,6 +140,7 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
 
+
 		/*
 		 * Application Service Providers...
 		 */
@@ -149,6 +150,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 		'App\Providers\ModalServiceProvider',
+		'App\Providers\ComposerServiceProvider',
 
 	],
 

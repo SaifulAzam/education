@@ -63,7 +63,7 @@
 
     <div class="form-group">
         {!! Form::label('tag_list', '标签：') !!}
-        {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+        {!! Form::select('tag_list[]', $tag_list, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
     </div>
 
     <!-----Add Coupon Form Input ---->

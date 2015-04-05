@@ -10,6 +10,7 @@ use App\Repositories\Comment\CommentInterface;
 use App\Repositories\Tag\TagInterface;
 use Illuminate\Http\Request;
 use Auth;
+use Cache;
 
 class TutorsController extends Controller {
 	protected $tutors;
@@ -28,97 +29,19 @@ class TutorsController extends Controller {
 		$this->educations = $educations;
 		$this->lessons = $lessons;
 
-		$this->middleware('auth', ['only' => ['storeComment', 'create', 'store']]);
+		$this->middleware('auth', ['only' => ['create', 'store']]);
 	}
 
 	/**
-	 * Show the complete_info page
+	 * Navigation
 	 *
-	 * @return Response
+	 * @return View
 	 */
-
-	public function create()
-	{
-		$tag_can_teach = $this->tags->lists('name', 'id');
-		return view('auth.tutor_complete', compact('tag_can_teach'));
-	}
-
-	/**
-	 * After Registration as a tutor, store complete info data
-	 *
-	 * @return Response
-	 */
-	public function store(Request $request)
-	{
-		$tutor = $this->tutors->create($request->all());
-		//dd($tutor);
-		$tmp = Auth::user()->tutor()->save($tutor);
-		$tags = $request->input('tag_can_teach');
-		$tmp->tags()->attach($tags);
-		Auth::user()->tutor_complete = 1;
-		Auth::user()->save();
-		return redirect('/home');
-	}
-
-	/**
-	 * List all the tutors
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$tutors = $this->tutors->paginate(5);
-		$tags = $this->tags->all();
-		return view('front.tutors.index', compact('tutors', 'tags'));
-	}
-
-	/**
-	 * Show individual tutor page
-	 *
-	 * @return Response
-	 */
-
-	public function show($id)
-	{
-		$tutor = $this->tutors->findOrFail($id);
-		return view('front.tutors.show', compact('tutor'));
-	}
-
-	/**
-	 * Store Comments
-	 *
-	 * @return Response
-	 */
-
-	public function storeComment($id, Request $request)
-	{
-		$tutor = $this->tutors->findOrFail($id);
-		$comment = $this->comments->create($request->all());
-		Auth::user()->comments()->save($comment);
-		$tutor->comments()->save($comment);
-		flash()->overlay('评论成功！');
-		return redirect()->back();
-	}
-
-	/**
-	 * sort by Tags
-	 *
-	 * @return Response
-	 */
-
-	public function filterByTag($tagId)
-	{
-		$tag = $this->tags->findOrFail($tagId);
-		$tutors = $tag->tutors()->paginate(5);
-		$tags = $this->tags->all();
-		return view('front.tutors.index', compact('tutors', 'tags'));
-	}
 
 	public function getProfile($id)
 	{
 		$tutor = $this->tutors->findOrFail($id);
-		$tags = $this->tags->lists('name', 'id');
-		return view('front.tutors.profile', compact('tutor', 'tags'));
+		return view('front.tutors.profile', compact('tutor'));
 	}
 
 	public function getStudents($id)
@@ -136,8 +59,7 @@ class TutorsController extends Controller {
 	public function getLessons($id)
 	{
 		$tutor = $this->tutors->findOrFail($id);
-		$tags = $this->tags->lists('name', 'id');
-		return view('front.tutors.lessons', compact('tutor', 'tags'));
+		return view('front.tutors.lessons', compact('tutor'));
 	}
 
 	public function getSettings($id)
@@ -145,6 +67,77 @@ class TutorsController extends Controller {
 		$tutor = $this->tutors->findOrFail($id);
 		return view('front.tutors.lessons', compact('tutor'));
 	}
+
+	/**
+	 * Show the complete_info page
+	 *
+	 * @return Response
+	 */
+
+	public function create()
+	{
+		return view('auth.tutor_complete');
+	}
+
+
+	/**
+	 * List all the tutors
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		$tutors = $this->tutors->paginate(5);
+		return view('front.tutors.index', compact('tutors'));
+	}
+
+	/**
+	 * Show individual tutor page
+	 *
+	 * @return Response
+	 */
+
+	public function show($id)
+	{
+		$tutor = $this->tutors->findOrFail($id);
+		Cache::put('tutor', $tutor, 10);
+		return view('front.tutors.show', compact('tutor'));
+	}
+
+	/**
+	 * After Registration as a tutor, store complete info data
+	 *
+	 * @return Response
+	 */
+	public function store(Request $request)
+	{
+		$tutor = $this->tutors->create($request->all());
+		Auth::user()->tutor()->save($tutor);
+		$tags = $request->input('tags');
+		$tutor->tags()->attach($tags);
+		Auth::user()->tutor_complete = 1;
+		Auth::user()->save();
+		return view('front.tutors.show', compact('tutor'));
+	}
+
+	/**
+	 * sort by Tags
+	 *
+	 * @return Response
+	 */
+
+	public function filterByTag($tagId)
+	{
+		$tag = $this->tags->findOrFail($tagId);
+		$tutors = $tag->tutors()->paginate(5);
+		return view('front.tutors.index', compact('tutors'));
+	}
+
+	/**
+	 * edit Social Page
+	 *
+	 * @return Response
+	 */
 
 	public function editSocial($id, Request $request)
 	{
@@ -156,6 +149,28 @@ class TutorsController extends Controller {
 		return redirect()->back();
 	}
 
+	/**
+	 * edit basic Info
+	 *
+	 * @return Response
+	 */
+
+	public function editBasic($id, Request $request)
+	{
+		$tutor = $this->tutors->findOrFail($id);
+		$tutor->occupation = $request->input('occupation');
+		$tutor->capable_grade = $request->input('capable_grade');
+		$tutor->bio = $request->input('bio');
+		$tutor->save();
+		return redirect()->back();
+	}
+
+	/**
+	 * Show individual tutor page
+	 *
+	 * @return Response
+	 */
+
 	public function editTag($id, Request $request)
 	{
 		$tutor = $this->tutors->findOrFail($id);
@@ -163,6 +178,12 @@ class TutorsController extends Controller {
 		$tutor->tags()->sync((array) $tags);
 		return redirect()->back();
 	}
+
+	/**
+	 * Show individual tutor page
+	 *
+	 * @return Response
+	 */
 
 	public function editJob($id, Request $request)
 	{
@@ -196,15 +217,14 @@ class TutorsController extends Controller {
 		return redirect()->back();
 	}
 
-	public function editPicture($id, Request $request)
+	public function editPicture(Request $request)
 	{
-		$tutor = $this->tutors->findOrFail($id);
 		$file = $request->file('thumbnail');
 		$filename = $file->getClientOriginalName();
-		$filename = time() . '-' . $filename;
+		$filename = '/image/' . time() . '-' . $filename;
 		$file->move(public_path() . '/image', $filename);
-		$tutor->thumbnail = $filename;
-		$tutor->save();
+		Auth::user()->photo = $filename;
+		Auth::user()->save();
 		return redirect()->back();
 	}
 

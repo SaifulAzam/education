@@ -14,7 +14,8 @@ class CouponsTableSeeder extends Seeder {
         foreach(range(1, 30) as $index)
         {
             Coupon::create([
-                'school_id'             => '1',
+                'school_id'             => $faker->numberBetween(1, 30),
+                'tutor_id'              => $faker->numberBetween(1, 30),
                 'title'                 => $faker->sentence(5),
                 'body'                  => $faker->paragraph(5),
                 'original_price'        => $faker->numberBetween('1000', '10000'),

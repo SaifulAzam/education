@@ -27,8 +27,7 @@ class StudentsController extends Controller {
 
     public function create()
     {
-        $tag = $this->tags->lists('name', 'id');
-        return view('auth.student_complete', compact('tag'));
+        return view('auth.student_complete');
     }
 
     /**

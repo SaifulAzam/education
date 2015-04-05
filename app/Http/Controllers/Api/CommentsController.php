@@ -8,48 +8,52 @@
  */
 
 use App\Http\Requests;
-use App\Repositories\Article\ArticleInterface;
 use App\Repositories\Comment\CommentInterface;
-use App\Repositories\Coupon\CouponInterface;
-use App\Repositories\Lesson\LessonInterface;
-use App\Repositories\School\SchoolInterface;
-use App\Repositories\Tutor\TutorInterface;
 use Illuminate\Http\Request;
 use Auth;
+use Input;
+use Log;
+use Crypt;
 
 class CommentsController extends ApiController {
 
     protected $comments;
-    protected $lessons;
-    protected $schools;
-    protected $tutors;
-    protected $articles;
-    protected $coupons;
 
-    function __construct(CommentInterface $comments, LessonInterface $lessons, SchoolInterface $schools,
-                         TutorInterface $tutors, ArticleInterface $articles, CouponInterface $coupons)
+    function __construct(CommentInterface $comments)
     {
         $this->comments = $comments;
-        $this->lessons = $lessons;
-        $this->schools = $schools;
-        $this->tutors = $tutors;
-        $this->articles = $articles;
-        $this->coupons = $coupons;
+        $this->middleware('auth', ['only' => ['store', 'destroy']]);
     }
+
 
     public function index()
     {
-        $this->data = $this->comments->paginate(10);
+        $owner = Input::get('owner');
+        $owner = Crypt::decrypt($owner);
+        list($owner_type, $owner_id) = explode('.', $owner);
+        $owner = $owner_type::findOrFail($owner_id);
+        $this->data = $owner->comments()->latest('created_at')->paginate(5);
         return $this->paginate();
+
     }
 
     public function store(Request $request)
     {
-        $comment = $this->comments->create($request->all());
+        $owner = $request->input('owner');
+        $owner = Crypt::decrypt($owner);
+        list($owner_type, $owner_id) = explode('.', $owner);
+        $data = [
+            'owner_type'    => $owner_type,
+            'owner_id'      => $owner_id,
+            'body'          => $request->input('body'),
+            'author_id'     => Auth::user()->id,
+            'author_name'   => $request->input('author_name')
+        ];
+        $comment = $this->comments->fill($data);
+        $comment->save();
         $tags = $request->input('tags');
         $comment->tags()->attach($tags);
-
-        return $this->respondCreated('created');
+        return $this->push(200, 20000, 'Comment Created');
     }
 
     public function destroy($id)

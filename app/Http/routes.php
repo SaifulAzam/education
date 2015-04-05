@@ -12,18 +12,9 @@
 */
 
 
-Route::get('/', function(){
-	return view('front.home');
-});
-
 /*App::missing(function($exception){
 	return view('index');
 });*/
-
-
-Route::get('/a', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -34,87 +25,107 @@ Route::controllers([
 Route::group(['prefix' => 'api/v1', 'namespace'=>'Api'], function()
 {
 	//lessons
-	Route::post('lessons/{id}', 'LessonsController@postComment');
+	Route::get('lessons/get', 'LessonsController@getLessons');
 	Route::resource('lessons', 'LessonsController', ['only' => ['index', 'show', 'store', 'destroy', 'update']]);
 
 	//tags
-	Route::get('lessons/{id}/tags', 'TagsController@index');
-	Route::resource('tags', 'TagsController', ['only' => ['index', 'show']]);
+	Route::resource('tags', 'TagsController', ['only' => ['index', 'store']]);
 
 	//articles
-	Route::post('articles/{id}', 'ArticlesController@postComment');
+
 	Route::resource('articles', 'ArticlesController', ['only' => ['index', 'show']]);
 
 	//comments
 	Route::resource('comments', 'CommentsController', ['only' => ['index', 'store', 'destroy']]);
 
 	//coupons
-	Route::post('coupons/{id}', 'CouponsController@postComment');
+
 	//Route::put('coupons', 'CouponsController@store');
 	Route::resource('coupons', 'CouponsController', ['only' => ['index', 'store', 'show', 'destroy', 'update']]);
 
 	//schools
-	Route::post('schools/{id}', 'SchoolsController@postComment');
+
 	Route::resource('schools', 'SchoolsController', ['only' => ['index', 'show']]);
 
 	//student_profile
-	Route::resource('students', 'StudentsController', ['only' => ['show', 'store', 'update']]);
+	Route::resource('students', 'StudentsController', ['only' => ['index', 'show', 'store', 'update']]);
 
 	//tutors
 	//Route::put('tutors', 'TutorsController@store');
-	Route::post('tutors/{id}', 'TutorsController@postComment');
+
 	Route::resource('tutors', 'TutorsController', ['only' => ['index', 'store', 'show', 'destroy', 'update']]);
+
+	//social info
+	Route::resource('socials', 'SocialsController', ['only' => ['index', 'store', 'show', 'destroy', 'update']]);
 });
 
-/*
+
 Route::group(['namespace'=>'Frontend'], function()
 {
 	//Home Page Controller
-	//Route::get('/', 'HomeController@index');
-	//Route::get('home', 'HomeController@index');
+	Route::get('/', 'HomeController@index');
+	Route::get('home', 'HomeController@index');
 	Route::get('/welcome', 'WelcomeController@index');
+
 	//Lessons Page Controller
-	Route::post('lessons/{id}', 'LessonsController@storeComment');
 	Route::get('lessons/tags/{tag}', 'LessonsController@filterByTag');
 	Route::resource('lessons', 'LessonsController', ['only' => ['index', 'show']]);
+
 	//Schools Page Controller
-	Route::post('schools/{id}', 'SchoolsController@storeComment');
 	Route::get('schools/sort/{condition}', 'SchoolsController@sortBy');
 	Route::get('schools/filter/{time}', 'SchoolsController@filterByTime');
 	Route::get('schools/tags/{tag}', 'SchoolsController@filterByTag');
 	Route::get('schools/filters/{location}', 'SchoolsController@filterByLocation');
+
+
+	Route::get('schools/{id}/profile', 'SchoolsController@getProfile');
+	Route::get('schools/{id}/students', 'SchoolsController@getStudents');
+	Route::get('schools/{id}/lessons', 'SchoolsController@getLessons');
+	Route::get('schools/{id}/comments', 'SchoolsController@getComments');
+	Route::get('schools/{id}/tutors', 'SchoolsController@getTutors');
+
+	Route::patch('schools/{id}/editBasic', 'SchoolsController@editBasic');
+	Route::patch('schools/{id}/editSocial', 'SchoolsController@editSocial');
+	Route::patch('schools/{id}/editTag', 'SchoolsController@editTag');
+	Route::post('schools/{id}/editPhoto', 'SchoolsController@editPicture');
+	Route::post('schools/{id}/deleteLesson/{id2}', 'SchoolsController@deleteLesson');
+	Route::post('schools/{id}/postLesson', 'SchoolsController@postLesson');
 	Route::resource('schools', 'SchoolsController', ['only' => ['index', 'show']]);
+
 	//Tutors Page Controller
-
-
 	Route::get('tutors/tags/{tag}', 'TutorsController@filterByTag');
-	Route::post('tutors/{id}', 'TutorsController@storeComment');
 	Route::get('tutors/{id}/profile', 'TutorsController@getProfile');
 	Route::get('tutors/{id}/students', 'TutorsController@getStudents');
 	Route::get('tutors/{id}/lessons', 'TutorsController@getLessons');
 	Route::get('tutors/{id}/comments', 'TutorsController@getComments');
 	Route::get('tutors/{id}/settings', 'TutorsController@getSettings');
+
+	Route::patch('tutors/{id}/editBasic', 'TutorsController@editBasic');
 	Route::patch('tutors/{id}/editSocial', 'TutorsController@editSocial');
 	Route::patch('tutors/{id}/editTag', 'TutorsController@editTag');
 	Route::post('tutors/{id}/editJob', 'TutorsController@editJob');
 	Route::post('tutors/{id}/editEducation', 'TutorsController@editEducation');
 	Route::post('tutors/{id}/deleteJob/{id2}', 'TutorsController@deleteJob');
 	Route::post('tutors/{id}/deleteEducation/{id2}', 'TutorsController@deleteEducation');
-	Route::post('tutors/{id}/lessons', 'TutorsController@postLesson');
-	Route::post('tutors/{id}/deleteLesson/{id2}', 'TutorsController@deleteLesson');
 	Route::post('tutors/{id}/editPhoto', 'TutorsController@editPicture');
+	Route::post('tutors/{id}/deleteLesson/{id2}', 'TutorsController@deleteLesson');
+	Route::post('tutors/{id}/postLesson', 'TutorsController@postLesson');
 	Route::resource('tutors', 'TutorsController', ['only' => ['index', 'show', 'store', 'create']]);
+
 	//Students Info Complete
 	Route::resource('students', 'StudentsController', ['only' => ['create', 'store']]);
+
 	//Coupons
 	Route::resource('coupons', 'CouponsController', ['only' => ['index', 'show']]);
+
 	//Articles
-	Route::post('articles/{id}', 'ArticlesController@storeComment');
 	Route::get('articles/tags/{tag}', 'ArticlesController@filterByTag');
 	Route::resource('articles', 'ArticlesController', ['only' => ['index', 'show']]);
+
 	//Community
 	Route::resource('community', 'CommunityController');
 });
+
 
 Route::group(['prefix' => 'backend', 'middleware' => 'auth', 'namespace'=>'Backend'], function()
 {
@@ -143,7 +154,7 @@ Route::group(['prefix' => 'backend', 'middleware' => 'auth', 'namespace'=>'Backe
 	Route::resource('roles', 'RolesController');
 
 });
-*/
+
 
 
 

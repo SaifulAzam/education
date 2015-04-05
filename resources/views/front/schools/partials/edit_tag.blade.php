@@ -3,16 +3,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">编辑社区账户</h4>
+                <h4 class="modal-title" id="exampleModalLabel">编辑擅长科目</h4>
             </div>
             <div class="modal-body">
-                {!! Form::model($tutor, ['method' => 'PATCH', 'action' => ['Frontend\TutorsController@editTag', $tutor->id]]) !!}
+                {!! Form::model($school, ['method' => 'PATCH', 'action' => ['Frontend\SchoolsController@editTag', $school->id]]) !!}
 
                 <!-----科目 Form Input ---->
 
                 <div class="form-group">
                     {!! Form::label('tag_list', '科目') !!}
-                    {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+                    {!! Form::select('tag_list[]', $tag_list, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
                 </div>
 
                 <div class="modal-footer">

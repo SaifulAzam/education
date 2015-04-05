@@ -39,10 +39,9 @@ class TutorsController extends Controller {
 	 */
 	public function create()
 	{
-		$tags = $this->tags->lists('name', 'id');
 		$users = $this->users->tutorNotComplete()->get();
 		$usernames = $users->lists('username', 'id');
-		return view('back.tutors.create', compact('tags', 'usernames'));
+		return view('back.tutors.create', compact('usernames'));
 	}
 
 	/**
@@ -83,9 +82,8 @@ class TutorsController extends Controller {
 	public function edit($id)
 	{
 		$tutor = $this->tutors->findOrFail($id);
-		$tags = $this->tags->lists('name', 'id');
 		$username = $tutor->user->username;
-		return view('back.tutors.edit', compact('tutor', 'username', 'tags'));
+		return view('back.tutors.edit', compact('tutor', 'username'));
 	}
 
 	/**

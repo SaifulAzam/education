@@ -18,8 +18,22 @@ class StudentsController extends ApiController {
         $this->middleware('auth', ['on' => ['create', 'store']]);
     }
 
+    public function index()
+    {
+        $owner = Input::get('owner');
+        if(empty($owner))
+        {
+            return $this->respondWithError('Empty Owner');
+        }
+        $owner = Crypt::decrypt($owner);
+        list($owner_type, $owner_id) = explode('.', $owner);
+        $owner = $owner_type::findOrFail($owner_id);
+        $this->data = $owner->students()->latest('created_at')->paginate(5);
+        return $this->paginate();
+    }
+
     /**
-     * After Registration as a tutor, store complete info data
+     * After Registration as a student, store complete info data
      *
      * @return Response
      */
@@ -31,7 +45,6 @@ class StudentsController extends ApiController {
         Auth::user()->save();
         $tags = $request->input('tags');
         $student->tags()->attach($tags);
-
         return $this->push(200, 20000, 'Student Profile Complete');
     }
 

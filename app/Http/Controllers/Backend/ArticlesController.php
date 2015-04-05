@@ -37,8 +37,7 @@ class ArticlesController extends Controller {
 	 */
 	public function create()
 	{
-		$tags = $this->tags->lists('name', 'id');
-		return view('back.articles.create', compact('tags'));
+		return view('back.articles.create');
 	}
 
 	/**
@@ -76,8 +75,7 @@ class ArticlesController extends Controller {
 	public function edit($id)
 	{
 		$article = $this->articles->findOrFail($id);
-		$tags = $this->tags->lists('name', 'id');
-		return view('back.articles.edit', compact('article', 'tags'));
+		return view('back.articles.edit', compact('article'));
 	}
 
 	/**

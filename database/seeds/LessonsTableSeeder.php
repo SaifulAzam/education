@@ -23,7 +23,6 @@ class LessonsTableSeeder extends Seeder {
                 'title' => $faker->sentence(5),
                 'body'  => $faker->paragraph(4),
                 'published_at' => $faker->dateTimeBetween($startDate = '-2 years', $endDate = 'now'),
-                'some_bool' => $faker->boolean(),
             ]);
         }
     }

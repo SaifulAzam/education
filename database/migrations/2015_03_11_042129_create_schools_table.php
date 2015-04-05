@@ -33,6 +33,7 @@ class CreateSchoolsTable extends Migration {
 			$table->integer('bad_count');
 			$table->integer('overall');
 			$table->integer('viewer_count');
+			$table->string('photo')->default('/image/person-placeholder.jpg');
 			$table->timestamps();
 		});
 	}

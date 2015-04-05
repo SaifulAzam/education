@@ -6,55 +6,20 @@
             <a href="{{action('Frontend\TutorsController@getLessons', $id)}}" class="btn-u btn-brd btn-brd-hover btn-u-dark btn-u-xs pull-right">查看全部</a>
         </div>
         <div id="scrollbar" class="panel-body no-padding mCustomScrollbar" data-mcs-theme="minimal-dark">
-            <div class="profile-post color-one">
-                <span class="profile-post-numb">01</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Creative Blog</a></h3>
-                    <p>How to market yourself as a freelance designer</p>
+            @if($tutor->lessons->count() == 0)
+                <h3>这家伙还没有任何课程</h3>
+            @else
+                @foreach($tutor->lessons as $index=>$lesson)
+                <div class="profile-post color-one">
+                    <span class="profile-post-numb">@if($index+1 < 10) 0{{$index + 1}} @else {{$index + 1}} @endif</span>
+                    <div class="profile-post-in">
+                        <h3 class="heading-xs"><a href="{{action('Frontend\LessonsController@show', [$lesson->id])}}">{{$lesson->title}}</a></h3>
+                        <p>{{substr($lesson->body, 0, 50)}}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="profile-post color-two">
-                <span class="profile-post-numb">02</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Codrops Collective #117</a></h3>
-                    <p>Web Design &amp; Development News</p>
-                </div>
-            </div>
-            <div class="profile-post color-three">
-                <span class="profile-post-numb">03</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Sketch Toolbox</a></h3>
-                    <p>Basic prototype of a package manager for Sketch</p>
-                </div>
-            </div>
-            <div class="profile-post color-four">
-                <span class="profile-post-numb">04</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Amazing Portfolio</a></h3>
-                    <p>Create a free online portfolio lookbook with Readz</p>
-                </div>
-            </div>
-            <div class="profile-post color-five">
-                <span class="profile-post-numb">05</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Discover New Features</a></h3>
-                    <p>More than 100+ amazing add-ons coming soon...</p>
-                </div>
-            </div>
-            <div class="profile-post color-six">
-                <span class="profile-post-numb">06</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Corporation Plans</a></h3>
-                    <p>Discussion of new corporation plans</p>
-                </div>
-            </div>
-            <div class="profile-post color-seven">
-                <span class="profile-post-numb">07</span>
-                <div class="profile-post-in">
-                    <h3 class="heading-xs"><a href="#">Project Updates</a></h3>
-                    <p>New features of coming update</p>
-                </div>
-            </div>
+                @endforeach
+             @endif
+
         </div>
     </div>
 </div>

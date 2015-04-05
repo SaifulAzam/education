@@ -29,9 +29,8 @@ class CouponsController extends Controller {
 	 */
 	public function index()
 	{
-		$coupons = $this->coupons->all();
-		$tags = $this->tags->all();
-		return view('front.coupons.index', compact('tags', 'coupons'));
+		$coupons = $this->coupons->paginate(4);
+		return view('front.coupons.index', compact('coupons'));
 	}
 
 	/**
@@ -44,39 +43,6 @@ class CouponsController extends Controller {
 	{
 		$coupon = $this->coupons->findOrFail($id);
 		return view('front.coupons.show', compact('coupon'));
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

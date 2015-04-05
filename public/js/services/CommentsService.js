@@ -1,17 +1,18 @@
-angular.module('CommentService', [])
+angular.module('CommentsService', [])
 
 .factory('Comment', function($http){
 
         return {
-            get : function (data) {
+            get : function (owner, page) {
                 return $http({
                     method: 'GET',
                     url: '/api/v1/comments',
-                    params: {page: data}
+                    params: {owner: owner,  page: page}
                 });
             },
 
             save : function(commentData) {
+                console.log(commentData);
                 return $http({
                     method: 'POST',
                     url: '/api/v1/comments',

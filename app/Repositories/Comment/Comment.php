@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model implements CommentInterface{
 
-	protected $fillable = ['user_id', 'lesson_id', 'school_id', 'coupon_id', 'tutor_id', 'article_id', 'comment'];
+	protected $fillable = ['body', 'author_name', 'author_id', 'parent_id', 'most_recent_child_id', 'owner_type', 'owner_id'];
 
     public function owner()
     {

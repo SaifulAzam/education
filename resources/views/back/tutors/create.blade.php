@@ -47,7 +47,7 @@
 
     <div class="form-group">
         {!! Form::label('tag_list', '擅长科目') !!}
-        {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+        {!! Form::select('tag_list[]', $tag_list, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
     </div>
 
     <!-----Self_intro Form Input ---->

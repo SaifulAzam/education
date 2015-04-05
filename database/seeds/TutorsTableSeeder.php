@@ -11,10 +11,11 @@ class TutorsTableSeeder extends Seeder {
         DB::table('tutors')->delete();
         $faker = Faker::create();
 
-        foreach(range(1, 5) as $index)
+        foreach(range(1, 30) as $index)
         {
             Tutor::create([
                 'name'             => $faker->name,
+                'school_id'        => $faker->numberBetween(1, 30),
                 'user_id'          => $index,
                 'bio'              => $faker->paragraph(4),
                 'occupation'       => $faker->word(),

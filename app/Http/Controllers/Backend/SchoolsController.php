@@ -36,8 +36,7 @@ class SchoolsController extends Controller {
 	 */
 	public function create()
 	{
-		$tags = $this->tags->lists('name', 'id');
-		return view('back.schools.create', compact('tags'));
+		return view('back.schools.create');
 	}
 
 	/**
@@ -62,8 +61,7 @@ class SchoolsController extends Controller {
 	public function edit($id)
 	{
 		$school = $this->schools->findOrFail($id);
-		$tags = $this->tags->lists('name', 'id');
-		return view('back.schools.edit', compact('school', 'tags'));
+		return view('back.schools.edit', compact('school'));
 	}
 
 	/**

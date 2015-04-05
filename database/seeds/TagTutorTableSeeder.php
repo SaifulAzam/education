@@ -13,14 +13,13 @@ class TagTutorTableSeeder extends Seeder {
         DB::table('tag_tutor')->delete();
         $faker = Faker::create();
 
-        $tutorIds = Tutor::lists('id');
         $tagIds = Tag::lists('id');
 
-        foreach(range(1, 5) as $index)
+        foreach(range(1, 30) as $index)
         {
             DB::table('tag_tutor')->insert([
 
-                'tutor_id' => $faker->randomElement($tutorIds),
+                'tutor_id' => $faker->numberBetween(1,30),
 
                 'tag_id' => $faker->randomElement($tagIds)
 

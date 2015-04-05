@@ -10,7 +10,7 @@ class SchoolsTableSeeder extends Seeder {
     {
         DB::table('schools')->delete();
         $faker = Faker::create();
-        $locations = ['East', 'West', 'North', 'South', 'SiMen', 'LiangNong', 'ZhangTing'];
+        $locations = ['城东', '城西', '城北', '城南', '泗门', '丈亭', '梁弄'];
 
         foreach(range(1, 30) as $index)
         {

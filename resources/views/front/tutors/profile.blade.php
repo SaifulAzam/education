@@ -26,22 +26,21 @@
 @endsection
 @section('content')
 
-    @include('front.tutors.profile.edit_social')
-    @include('front.tutors.profile.edit_tag')
-    @include('front.tutors.profile.edit_job')
-    @include('front.tutors.profile.edit_education')
-    @include('front.tutors.profile.edit_picture')
+    @include('front.tutors.partials.edit_social')
+    @include('front.tutors.partials.edit_tag')
+    @include('front.tutors.partials.edit_job')
+    @include('front.tutors.partials.edit_education')
+    @include('front.tutors.partials.edit_picture')
+    @include('front.tutors.partials.edit_basic')
 
     <!--=== Profile ===-->
     <div class="container content profile">
         <div class="row">
             <!--Left Sidebar-->
             <div class="col-md-3 md-margin-bottom-40">
-                <img class="img-responsive profile-img margin-bottom-20" src="/assets/img/team/img1-md.jpg" alt="">
+                <img class="img-responsive profile-img margin-bottom-20" src="{{$tutor->user->photo}}" alt="">
 
                 @include('front.partials.left_sidebar.tutor_sidenav', ['id' => $tutor->id])
-
-                @include('front.partials.left_sidebar.task')
 
                 <!--Datepicker-->
                 <form action="#" id="sky-form2" class="sky-form">
@@ -60,19 +59,24 @@
                     <div class="profile-bio">
                         <div class="row">
                             <div class="col-md-5">
-                                <img class="img-responsive md-margin-bottom-10" src=
-                                @if($tutor->thumbnail != '')
-                                    "/image/{{$tutor->thumbnail}}"
-                                @else "/image/person-placeholder.jpg" @endif alt="">
-                                <a class="btn-u btn-u-sm" data-toggle="modal" data-target="#edit_picture">Change Picture</a>
+                                <img class="img-responsive md-margin-bottom-10" src="{{$tutor->user->photo}}" alt="">
+                                @if($currentUser)
+                                    @if($currentUser->isTutor($tutor->user->id))
+                                        <a class="btn-u btn-u-sm" data-toggle="modal" data-target="#edit_picture">Change Picture</a>
+                                    @endif
+                                @endif
                             </div>
                             <div class="col-md-7">
-                                <h2>Edward Rooster</h2>
-                                <span><strong>Job:</strong> Web Developer</span>
-                                <span><strong>Position:</strong> Web Designer</span>
+                                @if($currentUser)
+                                    @if($currentUser->isTutor($tutor->user->id))
+                                        <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_basic"></i>
+                                    @endif
+                                @endif
+                                <h2>{{$tutor->name}}</h2>
+                                    <span><strong>职业：</strong> {{$tutor->occupation}}</span>
+                                    <span><strong>执教年级：</strong> {{$tutor->capable_grade}}</span>
                                 <hr>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget massa nec turpis congue bibendum. Integer nulla felis, porta suscipit nulla et, dignissim commodo nunc. Morbi a semper nulla.</p>
-                                <p>Proin mauris odio, pharetra quis ligula non, vulputate vehicula quam. Nunc in libero vitae nunc ultricies tincidunt ut sed leo. Sed luctus dui ut congue consequat. Cras consequat nisl ante, nec malesuada velit pellentesque ac. Pellentesque nec arcu in ipsum iaculis convallis.</p>
+                                <p>{{$tutor->bio}}</p>
                             </div>
                         </div>
                     </div><!--/end row-->
@@ -85,7 +89,11 @@
                             <div class="panel panel-profile">
                                 <div class="panel-heading overflow-h">
                                     <h2 class="panel-title heading-sm pull-left"><i class="fa fa-pencil"></i> 社区账户 </h2>
-                                    <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_social"></i>
+                                    @if(Auth::user())
+                                        @if(Auth::user()->isTutor($tutor->user->id))
+                                        <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_social"></i>
+                                        @endif
+                                    @endif
                                 </div>
                                 <div class="panel-body">
                                     <ul class="list-unstyled social-contacts-v2">
@@ -105,7 +113,11 @@
                             <div class="panel panel-profile">
                                 <div class="panel-heading overflow-h">
                                     <h2 class="panel-title heading-sm pull-left"><i class="fa fa-lightbulb-o"></i> 擅长科目</h2>
-                                    <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_tag"></i>
+                                    @if(Auth::user())
+                                        @if(Auth::user()->isTutor($tutor->user->id))
+                                        <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_tag"></i>
+                                        @endif
+                                    @endif
                                 </div>
                                 <div class="panel-body">
                                     @foreach($tutor->tags as $tag)
@@ -128,7 +140,11 @@
                     <div class="panel panel-profile">
                         <div class="panel-heading overflow-h">
                             <h2 class="panel-title heading-sm pull-left"><i class="fa fa-briefcase"></i> 工作经验</h2>
-                            <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_job"></i>
+                            @if(Auth::user())
+                                @if(Auth::user()->isTutor($tutor->user->id))
+                                <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_job"></i>
+                                @endif
+                            @endif
                         </div>
                         <div class="panel-body margin-bottom-40">
 
@@ -160,7 +176,11 @@
                     <div class="panel panel-profile">
                         <div class="panel-heading overflow-h">
                             <h2 class="panel-title heading-sm pull-left"><i class="fa fa-mortar-board"></i> 学习履历</h2>
-                            <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_education"></i>
+                            @if(Auth::user())
+                                @if(Auth::user()->isTutor($tutor->user->id))
+                                <i class="fa fa-cog pull-right" data-toggle="modal" data-target="#edit_education"></i>
+                                @endif
+                            @endif
                         </div>
                         <div class="panel-body">
                             @if($tutor->educations->count() == 0)

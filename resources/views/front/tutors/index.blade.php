@@ -4,8 +4,8 @@
     <!--=== Breadcrumbs ===-->
     <div class="breadcrumbs-v1">
         <div class="container">
-            <span>教育机构</span>
-            <h1>集合了不同的教育中心的信息</h1>
+            <span>老师中心</span>
+            <h1>集合了不同的家庭教师的信息</h1>
         </div>
     </div><!--/breadcrumbs-->
     <!--=== End Breadcrumbs ===-->
@@ -19,7 +19,7 @@
                     <div class="search-blocks search-blocks-left-green">
                         <div class="row">
                             <div class="col-md-4 search-img">
-                                <img alt="" src="/assets/img/new/img4.jpg" class="img-responsive">
+                                <img alt="" src="{{$tutor->user->photo}}" class="img-responsive">
                                 <ul class="list-unstyled">
                                     <li><i class="icon-briefcase"></i> {{$tutor->occupation}} </li>
                                     <li><i class="icon-map-marker"></i> {{$tutor->student_count}} </li>
@@ -34,7 +34,7 @@
                                     <li><i class="icon-star"></i></li>
                                     <li><i class="icon-star"></i></li>
                                 </ul>
-                                <p>{{$tutor->self_intro}}</p>
+                                <p>{{$tutor->bio}}</p>
                                 <a class="btn-u btn-u-sea" href="{{action('Frontend\TutorsController@show', [$tutor->id])}}">read more</a>
                             </div>
                         </div>

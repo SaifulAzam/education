@@ -6,8 +6,7 @@ class Coupon extends Model implements CouponInterface {
 
 	protected $dates = ['published_at'];
 	protected $fillable = [
-		'school_id', 'tutor_id', 'subject_id',
-		'title', 'body', 'original_price',
+		'owner_id', 'owner_type', 'title', 'body', 'original_price',
 		'coupon_price', 'class_count', 'class_type',
 		'discount', 'photo', 'published_at'
 	];
@@ -15,6 +14,11 @@ class Coupon extends Model implements CouponInterface {
 	public function school()
 	{
 		return $this->belongsTo('App\Repositories\School\School');
+	}
+
+	public function tutor()
+	{
+		return $this->belongsTo('App\Repositories\Tutor\Tutor');
 	}
 
 	public function tags()

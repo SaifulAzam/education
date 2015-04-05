@@ -13,13 +13,12 @@
     <title>家教集中营</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="/css/all.css"/>
     <link rel="stylesheet" href="/assets/plugins/select2/select2.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
 
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
-    <link href="/assets/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/plugins/fontawesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -43,9 +42,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/js/all.js"></script>
 
 <script src="/assets/plugins/select2/select2.js"></script>
+<script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 
 @yield('footer')

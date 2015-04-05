@@ -22,35 +22,23 @@ class TagsController extends ApiController {
 	 *
 	 * @return Response
 	 */
-	public function index($lessonId = null)
+	public function index()
 	{
-		$tags = $lessonId ? $this->lesson->findOrfail($lessonId)->tags : $this->tags->all();
-
-		return $this->respond([
-			'data' => $tags
-		]);
+		$this->data = $this->tags->all();
+		return $this->push();
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Store the specified resource.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function store($id)
 	{
 		//
 	}
 
-	public function getTags(Request $request)
-	{
-		$tags = $this->tags->all();
-		if($request->ajax())
-		{
-			return $tags;
-		}
-		return $tags;
-	}
 
 
 }

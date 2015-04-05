@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\Role\RoleInterface;
+use App\Repositories\School\SchoolInterface;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -10,11 +11,13 @@ class UsersController extends Controller {
 
 	protected $users;
 	protected $roles;
+	protected $schools;
 
-	function __construct(User $users, RoleInterface $roles)
+	function __construct(User $users, RoleInterface $roles, SchoolInterface $schools)
 	{
 		$this->users = $users;
 		$this->roles = $roles;
+		$this->schools = $schools;
 	}
 
 
@@ -88,7 +91,9 @@ class UsersController extends Controller {
 	public function update($id, Request $request)
 	{
 		$user = $this->users->findOrFail($id);
-		$user->update($request->all());
+		$data = $request->all();
+		$data['password'] = bcrypt($data['password']);
+		$user->update($data);
 		$roles = $request->input('roles');
 		$user->roles()->sync((array) $roles);
 		return redirect('/backend/users');

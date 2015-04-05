@@ -37,9 +37,8 @@ class CouponsController extends Controller {
 	 */
 	public function create()
 	{
-		$tags = $this->tags->lists('name', 'id');
 		$school_names = $this->getSchoolName();
-		return view('back.coupons.create', compact('tags', 'school_names'));
+		return view('back.coupons.create', compact('school_names'));
 	}
 
 	/**
@@ -83,9 +82,8 @@ class CouponsController extends Controller {
 	public function edit($id)
 	{
 		$coupon = $this->coupons->findOrFail($id);
-		$tags = $this->tags->lists('name', 'id');
 		$school_name = $coupon->school->name;
-		return view('back.coupons.edit', compact('coupon', 'tags', 'school_name'));
+		return view('back.coupons.edit', compact('coupon', 'school_name'));
 	}
 
 	/**

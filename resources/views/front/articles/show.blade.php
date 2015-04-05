@@ -51,44 +51,7 @@
 
         <hr>
 
-        <!-- Recent Comments -->
-        <div class="media">
-            <h3>最近评论</h3>
-            @foreach($article->comments as $comment)
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="/assets/img/sliders/elastislide/9.jpg" alt="" />
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">{{ $comment->user->nickname }} <span>{{ $comment->created_at }} </span></h4>
-                    <p> {{$comment->comment}} </p>
-                </div>
-                <br>
-            @endforeach
-        </div><!--/media-->
-        <!-- End Recent Comments -->
-
-        <hr>
-
-        <!-- Comment Form -->
-        <div class="post-comment">
-            <h3>评论一下</h3>
-            {!! Form::open(['action' => ['Frontend\ArticlesController@storeComment', $article->id]]) !!}
-
-            <!-----Comment Form Input ---->
-
-            <div class="row margin-bottom-20">
-                <div class="col-md-11 col-md-offset-0">
-                    {!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '8']) !!}
-                </div>
-            </div>
-
-            <!-----submit Form Input ---->
-
-            <p><button class="btn-u" type="submit">Send Message</button></p>
-
-            {!! Form::close() !!}
-        </div>
-        <!-- End Comment Form -->
+       @include('front.partials.comments', ['owner' => $article])
     </div><!--/container-->
     <!--=== End Content Part ===-->
 

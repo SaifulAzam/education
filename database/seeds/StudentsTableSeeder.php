@@ -13,7 +13,7 @@ class StudentsTableSeeder extends Seeder {
         $faker = Faker::create();
         $userIds = User::lists('id');
 
-        foreach(range(1, 5) as $index)
+        foreach(range(1, 30) as $index)
         {
             Student::create([
                 'name'             => $faker->name,

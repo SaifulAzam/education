@@ -11,7 +11,15 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->nickname }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
+                        @if(Auth::user()->hasRole('admin'))
                         <li><a href="/backend/dashboard">后台</a></li>
+                        @endif
+                        @if(Auth::user()->isSchoolAdmin('子轩教育'))
+                            <li><a href="{{action('Frontend\SchoolsController@getProfile', '1')}}">学校后台</a></li>
+                        @endif
+                            @if(Auth::user()->tutor))
+                                <li><a href="{{action('Frontend\TutorsController@show', $currentUser->tutor->id)}}">老师后台</a></li>
+                            @endif
                         <li><a href="/auth/logout">登出</a></li>
                     </ul>
                 </li>
@@ -45,7 +53,6 @@
                     <li class="{{Request::is('lessons') ? 'active' : '' }}"><a href="/lessons">课程</a></li>
                     <li class="{{Request::is('tutors') ? 'active' : '' }}"><a href="/tutors">老师</a></li>
                     <li class="{{Request::is('coupons') ? 'active' : '' }}"><a href="/coupons">优惠信息</a></li>
-                    <li class="{{Request::is('community') ? 'active' : '' }}"><a href="/community">交流区</a> </li>
                 </ul>
                 <div class="search-open">
                     <div class="input-group">

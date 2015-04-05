@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchoolRatingSchoolPivotTable extends Migration {
+class CreateSchoolStudentPivotTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,13 @@ class CreateSchoolRatingSchoolPivotTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('school_rating_school', function(Blueprint $table)
+		Schema::create('school_student', function(Blueprint $table)
 		{
-			$table->integer('school_rating_id')->unsigned()->index();
-			$table->foreign('school_rating_id')->references('id')->on('school_ratings')->onDelete('cascade');
 			$table->integer('school_id')->unsigned()->index();
 			$table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
+			$table->integer('student_id')->unsigned()->index();
+			$table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+			$table->timestamps();
 		});
 	}
 
@@ -28,7 +29,7 @@ class CreateSchoolRatingSchoolPivotTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('school_rating_school');
+		Schema::drop('school_student');
 	}
 
 }

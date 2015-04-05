@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder {
 
@@ -23,23 +24,26 @@ class DatabaseSeeder extends Seeder {
 		$this->cleanDatabase();
 		$this->call('UserTableSeeder');
 		$this->call('TagsTableSeeder');
-		$this->call('SchoolsTableSeeder');
+		$this->call('RolesTableSeeder');
+		$this->call('ArticlesTableSeeder');
+		$this->call('CouponsTableSeeder');
+		$this->call('CouponTagTableSeeder');
+		/*$this->call('SchoolsTableSeeder');
 		$this->call('TutorsTableSeeder');
 		$this->call('SchoolTagTableSeeder');
 		$this->call('SchoolRatingTableSeeder');
 		$this->call('TutorRatingTableSeeder');
 		$this->call('TagTutorTableSeeder');
-		$this->call('SchoolRatingSchoolTableSeeder');
-		$this->call('RolesTableSeeder');
 		$this->call('StudentsTableSeeder');
-		$this->call('ArticlesTableSeeder');
 		//$this->call('CommentsTableSeeder');
 		$this->call('ArticleTagTableSeeder');
-		$this->call('CouponsTableSeeder');
-		$this->call('CouponTagTableSeeder');
 		$this->call('LessonsTableSeeder');
 		$this->call('LessonTagTableSeeder');
 		$this->call('SubjectTableSeeder');
+		$this->call('StudentTutorTableSeeder');
+		$this->call('LessonStudentTableSeeder');
+		$this->call('SchoolStudentTableSeeder');
+		$this->call('StudentTagTableSeeder');*/
 	}
 
 	public function cleanDatabase()
@@ -62,48 +66,23 @@ class UserTableSeeder extends Seeder
 	public function run()
 	{
 		DB::table('users')->delete();
+		$faker = Faker::create();
+		/*foreach(range(1, 30) as $index)
+		{
+			User::create([
+				'username' 	=> $faker->userName,
+				'email'		=> $faker->email,
+				'password'	=> Hash::make("admin"),
+				'nickname'	=> $faker->name,
+				'cellphone' => $faker->numberBetween(10000000000, 19999999999),
+			]);
+		}*/
 		User::create([
 			'username' 	=> 'ad',
 			'email'		=> 'admin@gmail.com',
 			'password'	=> Hash::make("admin"),
 			'nickname'	=> 'Rain',
 			'cellphone' => '13429239110',
-			'tutor_complete' => '1',
-			'student_complete' => '1'
-		]);
-		User::create([
-			'username' 	=> 'test1',
-			'email'		=> 'test1@gmail.com',
-			'password'	=> Hash::make("admin"),
-			'nickname'	=> 'test1',
-			'cellphone' => '13429239111',
-			'tutor_complete' => '1',
-			'student_complete' => '1'
-		]);
-		User::create([
-			'username' 	=> 'test2',
-			'email'		=> 'test2@gmail.com',
-			'password'	=> Hash::make("admin"),
-			'nickname'	=> 'test2',
-			'cellphone' => '13429239112',
-			'tutor_complete' => '1',
-			'student_complete' => '1'
-		]);
-		User::create([
-			'username' 	=> 'test3',
-			'email'		=> 'test3@gmail.com',
-			'password'	=> Hash::make("admin"),
-			'nickname'	=> 'test3',
-			'cellphone' => '13429239113',
-			'tutor_complete' => '1',
-			'student_complete' => '1'
-		]);
-		User::create([
-			'username' 	=> 'test4',
-			'email'		=> 'test4@gmail.com',
-			'password'	=> Hash::make("admin"),
-			'nickname'	=> 'test4',
-			'cellphone' => '13429239114',
 			'tutor_complete' => '1',
 			'student_complete' => '1'
 		]);

@@ -65,7 +65,7 @@
                 <div class="search-blocks search-blocks-left-green">
                     <div class="row">
                         <div class="col-md-4 search-img">
-                            <img alt="" src="/assets/img/new/img1.jpg" class="img-responsive">
+                            <img alt="" src="{{$school->photo}}" class="img-responsive">
                             <ul class="list-unstyled">
                                 <li><i class="icon-briefcase"></i> {{$school->location}}</li>
                                 <li><i class="icon-map-marker"></i> {{$school->founding_time}}</li>
@@ -80,7 +80,7 @@
                                 <li><i class="icon-star"></i></li>
                                 <li><i class="icon-star"></i></li>
                             </ul>
-                            <p>{{$school->self_intro}}</p>
+                            <p>{{$school->bio}}</p>
                             <a class="btn-u btn-u-sea" href="{{action('Frontend\SchoolsController@show', [$school->id])}}">read more</a>
                             <ul class="list-unstyled blog-tags text-right">
                                 <li>好评数 {{ $school->good_count }}</li>

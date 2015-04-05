@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="exampleModalLabel">创建课程</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['action' => ['Frontend\TutorsController@postLesson', $tutor->id]]) !!}
+                {!! Form::open(['action' => ['Frontend\SchoolsController@postLesson', $school->id]]) !!}
 
                 <!-----Title Form Input ---->
 
@@ -22,6 +22,27 @@
                     {!! Form::textarea('body', null, ['class' => 'form-control wysihtml5']) !!}
                 </div>
 
+                <!-----Price Form Input ---->
+
+                <div class="form-group">
+                    {!! Form::label('price', '价格：') !!}
+                    {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <!-----Class_count Form Input ---->
+
+                <div class="form-group">
+                    {!! Form::label('class_count', '课时：') !!}
+                    {!! Form::text('class_count', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <!-----Class_type Form Input ---->
+
+                <div class="form-group">
+                    {!! Form::label('class_type', '上课形式：') !!}
+                    {!! Form::text('class_type', null, ['class' => 'form-control']) !!}
+                </div>
+
                 <!-----Published_at Form Input ---->
 
                 <div class="form-group">
@@ -33,7 +54,7 @@
 
                 <div class="form-group">
                     {!! Form::label('tag_list', '标签：') !!}
-                    {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+                    {!! Form::select('tag_list[]', $tag_list, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
                 </div>
 
                 <div class="modal-footer">

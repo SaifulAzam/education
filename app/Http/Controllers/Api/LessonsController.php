@@ -37,9 +37,25 @@ class LessonsController extends ApiController {
 	 */
 	public function index()
 	{
-		$this->data = $this->lessons->latest('published_at')->published()->paginate(10);
+		$this->data = $this->lessons->latest('published_at')->published()->paginate(5);
 		return $this->paginate();
 	}
+
+	/**
+	 * Display Lessons According Owner.
+	 *
+	 * @return Response
+	 */
+	public function getLessons()
+	{
+		$owner = Input::get('owner');
+		$owner = Crypt::decrypt($owner);
+		list($owner_type, $owner_id) = explode('.', $owner);
+		$owner = $owner_type::findOrFail($owner_id);
+		$this->data = $owner->lessons()->latest('created_at')->paginate(5);
+		return $this->paginate();
+	}
+
 
 	/**
 	 * Store a newly created resource in storage.
@@ -132,7 +148,6 @@ class LessonsController extends ApiController {
 		$lesson->tags()->sync((array) $tags);
 
 		return $this->push(200, 20000, 'Lesson Updated');
-
 	}
 
 	/**
@@ -150,28 +165,6 @@ class LessonsController extends ApiController {
 		}
 		$lesson->delete();
 		return $this->push(200, 20000, 'Lesson Deleted');
-	}
-
-	/**
-	 * Post Comments
-	 *
-	 * @return Response
-	 */
-
-	public function postComment($id, Request $request)
-	{
-		$lesson = $this->lessons->find($id);
-		if (!$lesson)
-		{
-			return $this->notFound('Lesson does not exist');
-		}
-		$comment = $this->comments->create($request->all());
-
-		Auth::user()->comments()->save($comment);
-
-		$lesson->comments()->save($comment);
-
-		return $this->push(200, 20000, 'Comment Created');
 	}
 
 }

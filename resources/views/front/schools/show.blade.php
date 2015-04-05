@@ -5,8 +5,7 @@
     <!--=== Interactive Slider ===-->
     <div class="breadcrumbs-v3 img-v1 text-center">
         <div class="container">
-            <h1>{{ $school->name }} </h1>
-            <p>Unify is a clean and fully responsive</p>
+            <a href="{{URL::to('schools/'. $school->id . '/profile' )}}"><h1>{{ $school->name }} </h1></a>
         </div>
     </div>
     <!--=== End Interactive Slider ===-->
@@ -14,9 +13,10 @@
     <!--=== Title v1 ===-->
     <div class="container content-sm">
         <div class="title-v1 no-margin-bottom">
-            <p class="no-margin-bottom">Unify <strong>creative</strong> technology company providing key digital services. <br>
-                Focused on helping our clients to build a <strong>successful</strong> business on web and mobile.</p>
-            {{ $school->self_intro }}
+            <h3>个性化教育领跑者——子轩教育</h3>
+            <p class="no-margin-bottom">
+                我们来自中国经济发展速度最快的沿海城市 ，我们寻求二三线城市志同道合的你们，同等的消费level、同样的教育idea、同款的题海book，足以让我们“心”照不宣，我们是你的中国好拍档。远亲不如近邻，和子轩一起创造教育界的传奇。
+                .</p>
         </div>
     </div>
     <!--=== End Title v1 ===-->
@@ -33,39 +33,31 @@
     <div class="bg-color-light">
         <div class="container content-sm">
             <div class="headline-center margin-bottom-60">
-                <h2>WHAT PEOPLE SAY</h2>
-                <p>Phasellus vitae ipsum ex. Etiam eu vestibulum ante. <br>
-                    Lorem ipsum <strong>dolor</strong> sit amet, consectetur adipiscing elit. Morbi libero libero, imperdiet fringilla </p>
+                <a href="{{URL::to('schools/'. $school->id . '/comments' )}}"><h2>就读过的学生对我们的评价</h2></a>
+                <p></p>
             </div>
 
             <!-- Testimonials Wrap -->
             <div class="testimonials-v6 testimonials-wrap">
                 @unless($school->comments->isEmpty())
+                    @foreach ($school->comments()->paginate(4)->chunk(2) as $comments)
                         <div class="row margin-bottom-50">
-                            @foreach ($school->comments as $comment)
+                            @foreach($comments as $comment)
                             <div class="col-md-6 md-margin-bottom-50">
                                 <div class="testimonials-info rounded-bottom">
                                     <img class="rounded-x" src="/assets/img/testimonials/img5.jpg" alt="">
                                     <div class="testimonials-desc">
-                                        <p>{{ $comment->comment }}</p>
-                                        <strong>{{$comment->user->nickname}}</strong>
+                                        <p>{{ $comment->body }}</p>
+                                        <strong>{{$comment->author_name}}</strong>
                                         <span>Web Developer</span>
                                     </div>
                                 </div>
                             </div>
                             @endforeach
-                            <div class="col-md-6">
-                                <div class="testimonials-info rounded-bottom">
-                                    <img class="rounded-x" src="/assets/img/testimonials/img6.jpg" alt="">
-                                    <div class="testimonials-desc">
-                                        <p>Donec quis lorem sit amet nibh tempor porttitor non eu justo. Fusce iaculis scelerisque nibh at rhoncus. Aliquam blandit.</p>
-                                        <strong>Sara Lisbon</strong>
-                                        <span>Designer</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div><!--/end row-->
+                    @endforeach
                 @endunless
+                @if(false)
                 <div class="row margin-bottom-20">
                     <div class="col-md-6 md-margin-bottom-50">
                         <div class="testimonials-info rounded-bottom">
@@ -88,31 +80,11 @@
                         </div>
                     </div>
                 </div><!--/end row-->
+                @endif
             </div>
             <!-- End Testimonials Wrap -->
         </div><!--/end container-->
     </div>
     <!--=== End Testimonials v6 ===-->
-    <!-- Comment Form -->
-    <div class="container content-sm">
-        <div class="post-comment">
-            <h3>评论一下</h3>
-            {!! Form::open(['action' => ['Frontend\SchoolsController@storeComment', $school->id]]) !!}
 
-            <!-----Comment Form Input ---->
-
-            <div class="row margin-bottom-20">
-                <div class="col-md-11 col-md-offset-0">
-                    {!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '8']) !!}
-                </div>
-            </div>
-
-            <!-----submit Form Input ---->
-
-            <p><button class="btn-u" type="submit">Send Message</button></p>
-
-            {!! Form::close() !!}
-        </div>
-    </div>
-    <!-- End Comment Form -->
 @endsection

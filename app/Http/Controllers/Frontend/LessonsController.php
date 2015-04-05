@@ -4,19 +4,16 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Lesson\LessonInterface;
-use App\Repositories\Comment\CommentInterface;
 use App\Repositories\Tag\TagInterface;
 use Auth;
 
 class LessonsController extends Controller {
 
 	protected $lessons;
-	protected $comments;
 	protected $tags;
 
-	function __construct(LessonInterface $lessons, CommentInterface $comments, TagInterface $tags)
+	function __construct(LessonInterface $lessons, TagInterface $tags)
 	{
-		$this->comments = $comments;
 		$this->lessons = $lessons;
 		$this->tags = $tags;
 
@@ -31,24 +28,7 @@ class LessonsController extends Controller {
 	public function index()
 	{
 		$lessons = $this->lessons->latest('published_at')->published()->paginate(5);
-		$tags = $this->tags->all();
-		return view('front.lessons.index', compact('lessons', 'tags'));
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function storeComment($id, Request $request)
-	{
-		$lesson = $this->lessons->findOrFail($id);
-		$comment = $this->comments->create($request->all());
-		Auth::user()->comments()->save($comment);
-		$lesson->comments()->save($comment);
-		flash()->overlay('评论成功！');
-
-		return redirect()->back();
+		return view('front.lessons.index', compact('lessons'));
 	}
 
 	/**
@@ -67,8 +47,7 @@ class LessonsController extends Controller {
 	{
 		$tag = $this->tags->findOrFail($tagId);
 		$lessons = $tag->lessons()->paginate(5);
-		$tags = $this->tags->all();
-		return view('front.lessons.index', compact('lessons', 'tags'));
+		return view('front.lessons.index', compact('lessons'));
 	}
 
 

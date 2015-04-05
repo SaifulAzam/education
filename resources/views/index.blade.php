@@ -18,8 +18,8 @@
 
     <!-- ANGULAR -->
     <!-- all angular resources will be loaded from the /public folder -->
-    <script src="js/controllers/MainController.js"></script> <!-- load our controller -->
-    <script src="js/services/CommentService.js"></script> <!-- load our service -->
+    <script src="js/controllers/CommentsController.js"></script> <!-- load our controller -->
+    <script src="js/services/CommentsService.js"></script> <!-- load our service -->
     <script src="js/app.js"></script> <!-- load our application -->
 
 

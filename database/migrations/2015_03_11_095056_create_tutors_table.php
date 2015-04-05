@@ -16,8 +16,10 @@ class CreateTutorsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
+			$table->integer('school_id')->unsigned();
 			$table->string('name');
 			$table->text('bio');
+			$table->string('experience');
 			$table->string('occupation');
 			$table->string('capable_grade');
 			$table->integer('student_count');

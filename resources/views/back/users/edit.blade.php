@@ -65,6 +65,9 @@
             </div>
         </div>
 
+        <!-----School_name Form Input ---->
+
+
         <div class="form-group">
             <label class="col-md-4 control-label">密码</label>
             <div class="col-md-6">

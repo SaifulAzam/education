@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tutor extends Model implements TutorInterface {
 
-    protected $fillable = ['bio', 'occupation', 'name', 'student_count', 'capable_grade', 'user_id', 'weibo', 'weixin', 'qq'];
+    protected $fillable = ['bio', 'occupation', 'name', 'student_count', 'capable_grade', 'user_id', 'weibo', 'weixin', 'qq', 'school_id'];
 
     public function user()
     {

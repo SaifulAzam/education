@@ -68,6 +68,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Repositories\Comment\Comment', 'author_id');
 	}
 
+	public function isTutor($id)
+	{
+		if($this->id == $id)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public function isSchoolAdmin($name)
+	{
+		if($this->hasRole($name))
+		{
+			return true;
+		}
+		return false;
+	}
+
+
 	public function hasRole($name)
 	{
 		foreach ($this->roles as $role)

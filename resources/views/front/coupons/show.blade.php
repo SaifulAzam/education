@@ -15,11 +15,11 @@
     <!--=== Breadcrumbs ===-->
     <div class="breadcrumbs margin-bottom-40">
         <div class="container">
-            <h1 class="pull-left">Portfolio Item 1</h1>
+            <h1 class="pull-left">{{$coupon->title}}</h1>
             <ul class="pull-right breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="">Portfolio</a></li>
-                <li class="active">Portfolio Item 1</li>
+                <li><a href="/">主页</a></li>
+                <li><a href="/coupons">优惠信息</a></li>
+                <li class="active">{{$coupon->title}}</li>
             </ul>
         </div><!--/container-->
     </div><!--/breadcrumbs-->
@@ -66,24 +66,23 @@
 
             <!-- Content Info -->
             <div class="col-md-5">
-                <h2>Portfolio Item Information</h2>
-                <p>At vero eos et accusamus et iusto odio dignissimos <a href="#">ducimus qui blanditiis</a> praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus.</p>
-                <p>Molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus.</p>
+                <h2>{{$coupon->title}}</h2>
+                <p>{{$coupon->body}}</p>
                 <ul class="list-unstyled">
-                    <li><i class="icon-user color-green"></i> Jack Baur</li>
-                    <li><i class="icon-calendar color-green"></i> 14,2003 February</li>
-                    <li><i class="icon-tags color-green"></i> Websites, Google, HTML5/CSS3</li>
+                    <li><i class="icon-user color-green"></i> 老师：{{$coupon->tutor ? $coupon->tutor->name : ''}}</li>
+                    <li><i class="icon-calendar color-green"></i> 学校：{{$coupon->school ? $coupon->school->name : ''}}</li>
+                    <li><i class="icon-tags color-green"></i> 原价：{{$coupon->original_price}}</li>
+                    <li><i class="icon-tags color-green"></i> 折扣价：{{$coupon->coupon_price}}</li>
+                    <li><i class="icon-compass color-green"></i> 课时：{{$coupon->class_count}}</li>
+                    <li><i class="icon-book color-green"></i> 课型：{{$coupon->class_type}}</li>
                 </ul>
-                <p><a class="btn-u btn-u-large" href="#">VISIT THE PROJECT</a></p>
+                <p><a class="btn-u btn-u-large" href="#">我想参加</a></p>
             </div>
             <!-- End Content Info -->
         </div><!--/row-->
 
-        <div class="tag-box tag-box-v2">
-            <p>Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat.</p>
-        </div>
+        @include('front.partials.comments', ['owner' => $coupon])
 
-        <div class="margin-bottom-20 clearfix"></div>
     </div><!--/container-->
     <!--=== End Content Part ===-->
 

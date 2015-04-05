@@ -45,10 +45,10 @@
 
         <div class = "form-group">
             {!! Form::label('class_type', '教学方式：') !!}
-            {!! Form::radio('class_type', 'one_on_one', (Input::old('class_type'))) !!} 一对一
-            {!! Form::radio('class_type', 'small_class', (Input::old('class_type'))) !!} 小班
-            {!! Form::radio('class_type', 'medium_class', (Input::old('class_type'))) !!} 中班
-            {!! Form::radio('class_type', 'big_class', (Input::old('class_type'))) !!} 大班
+            {!! Form::radio('class_type', '一对一', (Input::old('class_type'))) !!} 一对一
+            {!! Form::radio('class_type', '小班', (Input::old('class_type'))) !!} 小班
+            {!! Form::radio('class_type', '中班', (Input::old('class_type'))) !!} 中班
+            {!! Form::radio('class_type', '大班', (Input::old('class_type'))) !!} 大班
         </div>
 
         <!-----Class_count Form Input ---->
@@ -62,7 +62,7 @@
 
         <div class="form-group">
             {!! Form::label('tag_list', '标签：') !!}
-            {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+            {!! Form::select('tag_list[]', $tag_list, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
         </div>
 
         <!-----Add Coupon Form Input ---->
